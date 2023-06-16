@@ -16,6 +16,8 @@ const auth_module_1 = require("./auth/auth.module");
 const config_module_1 = require("@nestjs/config/dist/config.module");
 const match_history_module_1 = require("./match-history/match-history.module");
 const channel_module_1 = require("./chat/channel/channel.module");
+const channel_user_module_1 = require("./chat/channel-user/channel-user.module");
+const message_module_1 = require("./chat/message/message.module");
 const achievement_module_1 = require("./achievement/achievement.module");
 const user_achievement_module_1 = require("./user_achievement/user_achievement.module");
 const config_schema_1 = require("./config/config.schema");
@@ -40,14 +42,15 @@ AppModule = __decorate([
             match_history_module_1.MatchHistoryModule,
             achievement_module_1.AchievementModule,
             user_achievement_module_1.UserAchievementModule,
+            channel_module_1.ChannelModule,
+            channel_user_module_1.ChannelUserModule,
+            message_module_1.MessageModule,
             friend_module_1.FriendModule,
             stat_module_1.StatModule,
             gateway_module_1.GatewayModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [
-            app_service_1.AppService,
-        ],
+        providers: [app_service_1.AppService],
     })
 ], AppModule);
 exports.AppModule = AppModule;
