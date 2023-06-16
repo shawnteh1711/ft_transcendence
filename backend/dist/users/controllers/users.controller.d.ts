@@ -8,7 +8,7 @@ export declare class UsersController {
     getUsers(): Promise<import("../../typeorm/user.entity").User[]>;
     findUsersById(id: number): Promise<import("../../typeorm/user.entity").User>;
     findUsersByName(username: string): Promise<import("../../typeorm/user.entity").User>;
-    createUsers(createUserDto: CreateUserDto): Promise<import("../../typeorm/user.entity").User>;
+    createUsers(createUserDto: CreateUserDto): Promise<import("../../typeorm/user.entity").User[]>;
     removeUser(id: number): Promise<{
         message: string;
     }>;

@@ -11,12 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("../services/users.service");
-const create_user_dto_1 = require("../dtos/create-user.dto");
+const create_user_dto_1 = require("src/users/dtos/create-user.dto");
 const platform_express_1 = require("@nestjs/platform-express");
 const update_user_dto_1 = require("../dtos/update-user.dto");
 const swagger_1 = require("@nestjs/swagger");
@@ -90,10 +91,10 @@ __decorate([
 __decorate([
     (0, common_1.Post)('create'),
     (0, common_1.UsePipes)(common_1.ValidationPipe),
-    openapi.ApiResponse({ status: 201, type: require("../../typeorm/user.entity").User }),
+    openapi.ApiResponse({ status: 201, type: [require("../../typeorm/user.entity").User] }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
+    __metadata("design:paramtypes", [typeof (_a = typeof create_user_dto_1.CreateUserDto !== "undefined" && create_user_dto_1.CreateUserDto) === "function" ? _a : Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "createUsers", null);
 __decorate([
@@ -125,7 +126,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, update_user_dto_1.UpdateUserDto]),
+    __metadata("design:paramtypes", [Number, typeof (_b = typeof update_user_dto_1.UpdateUserDto !== "undefined" && update_user_dto_1.UpdateUserDto) === "function" ? _b : Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "updateUser", null);
 __decorate([

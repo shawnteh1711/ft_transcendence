@@ -5,7 +5,7 @@ import { UpdateUserDto } from '../dtos/update-user.dto';
 export declare class UsersService {
     private readonly usersRepository;
     constructor(usersRepository: Repository<User>);
-    createUser(createUserDto: CreateUserDto): Promise<User>;
+    createUser(createUserDto: CreateUserDto): Promise<User[]>;
     getUsers(): Promise<User[]>;
     findUsersById(id: number): Promise<User | null>;
     findUsersByIntraId(intra_uid: number): Promise<User | null>;
