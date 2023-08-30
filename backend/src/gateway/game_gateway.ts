@@ -120,6 +120,7 @@ export class GameGateway implements OnModuleInit {
       rankingRooms: this.rankingRooms,
       privateRooms: this.privateRooms,
     });
+    console.log('curret room', currentRoom);
     if (currentRoom) {
       this.gameService.leaveRoom({
         client: client,

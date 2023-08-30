@@ -1733,7 +1733,7 @@ const ChatBox: React.FC<any> = () => {
   const handleSelectGameMode = (gameMode: any) => {
     setSelectedGameMode(gameMode);
   };
-
+  
   const [isMatchmaking, setIsMatchmaking] = useState(false);
 
   const handleMatchmaking = () => {

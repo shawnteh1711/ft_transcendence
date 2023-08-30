@@ -29,9 +29,9 @@ const MatchMakingButton = ({
   const [player2User, setPlayer2User] = useState<UserData | null>(null);
   const router = useRouter();
   const { setGameState } = useGameData();
+  const prevGameMode = sessionStorage.getItem("gameMode");
 
   useEffect(() => {
-    // console.log("MatchMakingButton", gameMode);
     if (socket && userData.id) {
       socket?.on("loading-screen", ({ roomId, players }: any) => {
         // console.log("loading-screen");
@@ -57,16 +57,18 @@ const MatchMakingButton = ({
     };
   }, [socket, userData, router]);
 
-  // useEffect(() => {
-  //   if (userData.id && roomId) {
-  //     cancelMatchMaking();
-  //   }
-  // }, []);
+  useEffect(() => {
+    console.log('prevGameMode', prevGameMode);
+    userData.gameMode = prevGameMode as string;
+    cancelMatchMaking();
+  }, []);
 
 
   const handleMatchmaking = () => {
     if (isMatchmaking === false) {
       // console.log("start match");
+      sessionStorage.setItem("gameMode", gameMode);
+      userData.gameMode = gameMode;
       onMatchMaking();
       setIsMatchmaking(true);
       socket?.emit("join-room", {
@@ -82,6 +84,7 @@ const MatchMakingButton = ({
 
   const cancelMatchMaking = () => {
     console.log("cancel match");
+    console.log('userData in cancel match', userData);
     socket?.emit("clear-room", {
       roomId: roomId || sessionStorage.getItem("roomId"),
       // userName: userData.username,
