@@ -386,9 +386,7 @@ const Game = () => {
     });
 
     socket?.on("update-score", (score: ScoreBoard) => {
-      console.log("SCOREE", score);
       if (score.winner === "p1") {
-        console.log("P1", gameAnime);
         setGameAnime({
           ...gameAnime,
           startAnimate: true,
@@ -396,7 +394,6 @@ const Game = () => {
           yPos: score.ballYPos,
         });
       } else if (score.winner === "p2") {
-        console.log("P2", gameAnime);
         setGameAnime({
           ...gameAnime,
           startAnimate: true,
@@ -452,15 +449,15 @@ const Game = () => {
         user: currentUser.current,
       });
     };
-    
+
     const handleBeforeUnload = () => {
       handleRouteChange();
-    }
+    };
 
     router.events.on("routeChangeStart", handleRouteChange);
 
-    window.addEventListener("onbeforeunload", handleBeforeUnload); 
-    
+    window.addEventListener("onbeforeunload", handleBeforeUnload);
+
     return () => {
       socket?.off("game-over");
       clearInterval(movePaddleInterval);

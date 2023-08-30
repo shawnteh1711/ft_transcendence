@@ -90,7 +90,6 @@ const SixDigitVerification = ({
 
   const handleVerSubmit = () => {
     const otpCode = verCode.join("");
-    console.log(otpCode);
     axios
       .post(
         `auth/otp?mode=${mode}`,
