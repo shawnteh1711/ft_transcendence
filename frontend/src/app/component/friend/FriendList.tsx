@@ -36,7 +36,6 @@ const FriendList = () => {
   ]);
 
   useEffect(() => {
-    console.log('fetch user list');
     if (userData.id) {
       socket?.on("friend-request-received", (receivedFriendRequest: any) => {
         setFriendRequestArray((prevArray: any) => {

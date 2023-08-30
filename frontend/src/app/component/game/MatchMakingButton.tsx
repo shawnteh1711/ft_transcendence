@@ -64,7 +64,7 @@ const MatchMakingButton = ({
 
 
   const handleMatchmaking = () => {
-    if (isMatchmaking === false) {
+    if (isMatchmaking === false && userData && userData.id) {
       // console.log("start match");
       sessionStorage.setItem("gameMode", gameMode);
       userData.gameMode = gameMode;
