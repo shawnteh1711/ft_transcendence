@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { Stage, usePixiApp } from "react-pixi-fiber";
+import { Stage, usePixiApp } from "react-pixi-fiber/index.js";
 import { useEffect, useRef, useState } from "react";
 import useGameAnimeStore, { GameAnime } from "@/store/useGameAnimeStore";
 
@@ -7,7 +7,6 @@ const SoundEffects = ({ playing }: { playing: boolean }) => {
   const audio = new Audio("/game-effects/score.wav");
 
   useEffect(() => {
-    console.log("WTF", playing);
     if (playing === true) {
       audio.play();
     }
@@ -29,15 +28,12 @@ const SpriteAnimationContainer = ({
 }: SpriteAnimationContainerProps) => {
   const app = usePixiApp();
 
-  console.log("SPRITEANIMATIONCONTAINER RUNS", app);
-
   useEffect(() => {
     if (
       gameAnime.startAnimate &&
       textures.length > 0 &&
       gameAnime.winPlayer !== 0
     ) {
-      console.log("TEXTURE", textures, gameAnime);
       const anime = new PIXI.AnimatedSprite(textures);
 
       anime.anchor.set(0.5, 1);
@@ -58,7 +54,6 @@ const SpriteAnimationContainer = ({
       anime.onComplete = () => {
         app.stage.removeChild(anime);
         postAction();
-        console.log("done");
       };
 
       anime.play();

@@ -4,10 +4,6 @@ import { useEffect } from "react";
 const PlayerOne = () => {
   const gameData = useGameStore((state) => state.gameData);
 
-  useEffect(() => {
-    console.log("P1", gameData.playerOne);
-  }, [gameData]);
-
   return (
     <div className="flex space-x-12 items-center">
       {gameData.playerOne ? (
@@ -37,10 +33,6 @@ const PlayerOne = () => {
 
 const PlayerTwo = () => {
   const gameData = useGameStore((state) => state.gameData);
-
-  useEffect(() => {
-    console.log("P2", gameData.playerTwo);
-  }, [gameData]);
 
   return (
     <div className="flex space-x-12 items-center">

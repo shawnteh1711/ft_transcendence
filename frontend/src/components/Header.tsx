@@ -106,18 +106,6 @@ export const SettingsIcon = () => {
 };
 
 export const ProfileIconGroup = ({ user }: { user: UserData }) => {
-  // const router = useRouter();
-  // const fetchUserData = useFetchUserData();
-  // const prevPathRef = useRef(router.pathname);
-
-  // useEffect(() => {
-  //   if (prevPathRef.current === "/main-menu" && router.pathname !== "/game") {
-  //     fetchUserData();
-  //     console.log("user XXXX", user);
-  //   }
-  //   prevPathRef.current = router.pathname;
-  // }, [router]);
-
   return (
     <Link className="flex items-center space-x-2 group z-0" href={"/profile"}>
       <img
