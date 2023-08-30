@@ -87,6 +87,7 @@ export class GameService {
     param.user.gameMode = param.gameMode;
     if (param.gameMode === 'classic') return param.classicRooms;
     else if (param.gameMode === 'custom') return param.rankingRooms;
+    else if (param.gameMode === 'private') return param.privateRooms;
     else return null;
   }
 
@@ -94,7 +95,7 @@ export class GameService {
   getGameMode(param: GetGameModeParams) {
     if (param.gameMode === 'classic') return param.classicRooms;
     else if (param.gameMode === 'custom') return param.rankingRooms;
-    else if (param.gameMode === 'private') return param.rankingRooms;
+    else if (param.gameMode === 'private') return param.privateRooms;
     else return null;
   }
 
@@ -254,17 +255,20 @@ export class GameService {
       const remainingPlayer = roomPlayers.find(
         (player) => player !== param.user,
       );
+      console.log('remaining player', remainingPlayer);
 
       if (remainingPlayer) {
         param.server.to(param.roomId).emit('opponent-disconnected');
       }
+      console.log('room players', roomPlayers);
       const updatedRoomPlayers = roomPlayers.filter((player) => {
         player !== param.user;
       });
-      // console.log('updated room player', updatedRoomPlayers);
+      console.log('updated room player', updatedRoomPlayers);
       param.rooms.set(param.roomId, updatedRoomPlayers);
 
       // if room is empty, delete room and emit room-closed
+      console.log('param.roomId', param.roomId);
       param.server.to(param.roomId).emit('game-over');
       if (updatedRoomPlayers.length === 0) {
         this.gameOver({
@@ -578,7 +582,7 @@ export class GameService {
 
   /* set winner uid, create match-history, end game */
   async handleGameEnd(param: HandleGameStateParams) {
-    const endScore = 11;
+    const endScore = 2;
     if (
       param.gameInfo.pOneScore == endScore ||
       param.gameInfo.pTwoScore == endScore

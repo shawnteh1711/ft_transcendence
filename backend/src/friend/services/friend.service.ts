@@ -428,11 +428,12 @@ export class FriendService {
       });
     }
 
-    const test = await this.friendRepository.update(friend.id, {
-      roomId: 'in game',
-    });
-
-    return test;
+    if (friend) {
+      const test = await this.friendRepository.update(friend.id, {
+        roomId: 'in game',
+      });
+      return test;
+    }
   }
 
   async getGameStatus(userId: number) {

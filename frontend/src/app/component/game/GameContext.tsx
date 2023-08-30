@@ -93,7 +93,6 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     socket?.on("to-loading-screen", (data: any) => {
-      console.log("DATA", data);
       setRoomId(data.roomId);
       setLoadingScreenVisible(true);
       setPlayer1User(data.player1User);

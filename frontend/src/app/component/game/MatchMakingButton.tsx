@@ -58,7 +58,6 @@ const MatchMakingButton = ({
   }, [socket, userData, router]);
 
   useEffect(() => {
-    console.log('prevGameMode', prevGameMode);
     userData.gameMode = prevGameMode as string;
     cancelMatchMaking();
   }, []);
@@ -76,15 +75,12 @@ const MatchMakingButton = ({
         gameMode: gameMode,
       });
     } else {
-      // console.log("cancel match");
       onMatchMaking();
       cancelMatchMaking();
     }
   };
 
   const cancelMatchMaking = () => {
-    console.log("cancel match");
-    console.log('userData in cancel match', userData);
     socket?.emit("clear-room", {
       roomId: roomId || sessionStorage.getItem("roomId"),
       // userName: userData.username,

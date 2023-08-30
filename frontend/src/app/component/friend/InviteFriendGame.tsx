@@ -22,8 +22,6 @@ const InviteFriendGame = ({ user, friend, socket}: InviteFriendGameProps) => {
       user: user,
       friend: friend,
     });
-
-    
     // Implement the logic to invite a friend to a game
     // For example, send a request to the backend to invite a friend to a game
     // need a notification to the friend
