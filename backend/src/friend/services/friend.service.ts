@@ -11,7 +11,7 @@ import { Friend, FriendStatus } from 'src/typeorm/friends.entity';
 import { UsersService } from 'src/users/services/users.service';
 import { CreateFriendDto } from '../dto/create-friend.dto';
 import { UpdateFriendDto } from '../dto/update-friend.dto';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import { ChannelService } from 'src/chat/channel/channel.service';
 import { CreateChannelDto, JoinChannelDto } from 'src/chat/channel/dto';
 import { User } from 'src/typeorm/user.entity';
@@ -412,7 +412,7 @@ export class FriendService {
     return updatedFriendRequest;
   }
 
-  async updateRoomId(p1: number, p2: number) {
+  async updateRoomId(p1: number, p2: number, roomId: string) {
     let friend = await this.friendRepository.findOne({
       where: {
         sender: { id: p1 },
@@ -429,8 +429,11 @@ export class FriendService {
     }
 
     if (friend) {
+      // const test = await this.friendRepository.update(friend.id, {
+      //   roomId: 'in game',
+      // });
       const test = await this.friendRepository.update(friend.id, {
-        roomId: 'in game',
+        roomId: roomId,
       });
       return test;
     }
@@ -440,7 +443,7 @@ export class FriendService {
     let friend = await this.friendRepository.find({
       where: {
         sender: { id: userId },
-        roomId: 'in game',
+        roomId: Not(IsNull()),
       },
       relations: ['sender', 'receiver'],
     });
@@ -449,7 +452,7 @@ export class FriendService {
       friend = await this.friendRepository.find({
         where: {
           receiver: { id: userId },
-          roomId: 'in game',
+          roomId: Not(IsNull()),
         },
         relations: ['sender', 'receiver'],
       });

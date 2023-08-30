@@ -128,13 +128,26 @@ export class GameService {
     param.client.emit('joined-room', roomId);
 
     // update friends in game status
-    // const friends = await this.friendService.getFriendsBoth(param.user.id);
-    // for (const friend of friends) {
-    //   console.log('Friend: ', friend);
-    //   await this.friendService.update(friend.id, {
-    //     ...friend,
-    //     roomId: roomId,
-    //   });
+    const friends = await this.friendService.getFriendsBoth(param.user.id);
+    for (const friend of friends) {
+      console.log('Friend: ', friend);
+      await this.friendService.update(friend.id, {
+        ...friend,
+        roomId: roomId,
+      });
+    }
+
+    // if (roomPlayers.length === 2) {
+    //   const playersData = roomPlayers.map((player) => ({
+    //     player: player,
+    //   }));
+
+    //   const p1 = playersData[0].player.id;
+    //   const p2 = playersData[1].player.id;
+
+    //   if (p1 != undefined && p2 != undefined) {
+    //     await this.friendService.updateRoomId(p1, p2, roomId);
+    //   }
     // }
 
     if (roomPlayers.length === 2) {
@@ -144,23 +157,8 @@ export class GameService {
 
       const p1 = playersData[0].player.id;
       const p2 = playersData[1].player.id;
-
       if (p1 != undefined && p2 != undefined) {
-        await this.friendService.updateRoomId(p1, p2);
-      }
-    }
-
-    if (roomPlayers.length === 2) {
-      const playersData = roomPlayers.map((player) => ({
-        player: player,
-      }));
-
-      const p1 = playersData[0].player.id;
-      const p2 = playersData[1].player.id;
-
-      console.log(p1, p2);
-      if (p1 != undefined && p2 != undefined) {
-        await this.friendService.updateRoomId(p1, p2);
+        await this.friendService.updateRoomId(p1, p2, roomId);
       }
     }
 
@@ -204,27 +202,28 @@ export class GameService {
     param.client.to(param.pTwo.id.toString()).emit('joined-room', roomId);
 
     // update friends in game status
-    // const friends = await this.friendService.getFriendsBoth(param.pTwo.id);
-    // for (const friend of friends) {
-    //   console.log('Friend: ', friend);
-    //   await this.friendService.update(friend.id, {
-    //     ...friend,
-    //     roomId: roomId,
-    //   });
-    // }
-
-    if (roomPlayers?.length === 2) {
-      const playersData = roomPlayers.map((player) => ({
-        player: player,
-      }));
-
-      const p1 = playersData[0].player.id;
-      const p2 = playersData[1].player.id;
-
-      if (p1 != undefined && p2 != undefined) {
-        await this.friendService.updateRoomId(p1, p2);
-      }
+    const friends = await this.friendService.getFriendsBoth(param.pTwo.id);
+    console.log('Friends: ', friends);
+    for (const friend of friends) {
+      console.log('Friend: ', friend);
+      await this.friendService.update(friend.id, {
+        ...friend,
+        roomId: roomId,
+      });
     }
+
+    // if (roomPlayers?.length === 2) {
+    //   const playersData = roomPlayers.map((player) => ({
+    //     player: player,
+    //   }));
+
+    //   const p1 = playersData[0].player.id;
+    //   const p2 = playersData[1].player.id;
+
+    //   if (p1 != undefined && p2 != undefined) {
+    //     await this.friendService.updateRoomId(p1, p2, roomId);
+    //   }
+    // }
 
     param.server.to(roomId).emit('to-loading-screen', {
       roomId,
@@ -255,20 +254,16 @@ export class GameService {
       const remainingPlayer = roomPlayers.find(
         (player) => player !== param.user,
       );
-      console.log('remaining player', remainingPlayer);
 
       if (remainingPlayer) {
         param.server.to(param.roomId).emit('opponent-disconnected');
       }
-      console.log('room players', roomPlayers);
       const updatedRoomPlayers = roomPlayers.filter((player) => {
         player !== param.user;
       });
-      console.log('updated room player', updatedRoomPlayers);
       param.rooms.set(param.roomId, updatedRoomPlayers);
 
       // if room is empty, delete room and emit room-closed
-      console.log('param.roomId', param.roomId);
       param.server.to(param.roomId).emit('game-over');
       if (updatedRoomPlayers.length === 0) {
         this.gameOver({
@@ -592,10 +587,6 @@ export class GameService {
         winner_uid = param.gameInfo.pOneId;
       else winner_uid = param.gameInfo.pTwoId;
 
-      param.server.to(param.roomId).emit('game-over');
-      console.log('Game Over');
-      this.gameOver(param);
-
       await this.matchHistoryService.create({
         winner_uid: winner_uid,
         p1: param.gameInfo.pOneId,
@@ -607,6 +598,9 @@ export class GameService {
         p1_mmr: 1000,
         p2_mmr: 1000,
       });
+      param.server.to(param.roomId).emit('game-over');
+      console.log('Game Over');
+      this.gameOver(param);
     }
   }
 

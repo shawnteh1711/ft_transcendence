@@ -9,6 +9,7 @@ import ScoreExplosion from "@/components/game/ScoreExplosion";
 import game from "../../../../pages/game";
 import useGameAnimeStore from "@/store/useGameAnimeStore";
 import useUserStore from "@/store/useUserStore";
+import useFetchUserData from "@/app/webhook/UseFetchUserData";
 
 interface ScoreBoard {
   winner: string;
@@ -160,11 +161,12 @@ const Game = () => {
     state.gameData,
     state.setGameData,
   ]);
-  const [setUserData] = useUserStore((state) => [state.setUserData]);
+  // const [setUserData] = useUserStore((state) => [state.setUserData]);
   const [gameAnime, setGameAnime] = useGameAnimeStore((state) => [
     state.gameAnime,
     state.setGameAnime,
   ]);
+  const fetchUserData = useFetchUserData();
 
   const socket = useContext(SocketContext);
 
@@ -435,23 +437,7 @@ const Game = () => {
     /* ends game from backend */
     socket?.on("game-over", async () => {
       endGame();
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_NEST_HOST}/auth/profile`,
-          {
-            credentials: "include",
-          },
-        );
-        if (response.ok) {
-          const userData = await response.json();
-          console.log("User data in game over:", userData);
-          setUserData(userData);
-        } else {
-          throw new Error("User not found");
-        }
-      } catch (error) {
-        console.log("Error fetching user data:", error);
-      }
+      fetchUserData();
       router.push("/main-menu");
     });
 

@@ -34,10 +34,9 @@ const FriendList = () => {
     state.userData,
     state.setUserData,
   ]);
-  // const { setGameState, isLoadingScreenVisible, player1, player2 } = useGameData();
-
 
   useEffect(() => {
+    console.log('fetch user list');
     if (userData.id) {
       socket?.on("friend-request-received", (receivedFriendRequest: any) => {
         setFriendRequestArray((prevArray: any) => {
