@@ -31,7 +31,6 @@ const KillStreak = () => {
         if (gameData.currentStreak === 0) {
           app.stage.removeChild(anime);
         } else {
-          console.log("RUNNING");
           anime.anchor.set(0.5, 1);
           anime.angle = 180;
           if (gameData.currentStreak === 1) {
