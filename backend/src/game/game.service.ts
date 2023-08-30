@@ -75,7 +75,7 @@ export class GameService {
   /* returns available rooms by id */
   findAvailableRoomById(rooms: Map<string, UserData[]>, uid: number) {
     for (const [roomId, roomPlayers] of rooms) {
-      if (roomPlayers.length < 2 && roomPlayers[0].id === uid) {
+      if (roomPlayers.length < 2 && roomPlayers[0]?.id === uid) {
         return { roomId, roomPlayers };
       }
     }
@@ -564,10 +564,12 @@ export class GameService {
 
   /* ends game and remove everything */
   gameOver(param: HandleGameStateParams) {
-    World.clear(param.gameInfo.engine.world, true);
-    Engine.clear(param.gameInfo.engine);
-    this.clearRoomIdInFriend(param.gameInfo.pOneId);
-    this.clearRoomIdInFriend(param.gameInfo.pTwoId);
+    if (param.gameInfo) {
+      World.clear(param.gameInfo.engine.world, true);
+      Engine.clear(param.gameInfo.engine);
+      this.clearRoomIdInFriend(param.gameInfo.pOneId);
+      this.clearRoomIdInFriend(param.gameInfo.pTwoId);
+    }
     // param.client.leave(param.roomId);
     param.games.delete(param.roomId);
     param.rooms.delete(param.roomId);
