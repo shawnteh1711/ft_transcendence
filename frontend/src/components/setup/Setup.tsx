@@ -87,10 +87,12 @@ const NameStep = () => {
   const handleNameUpdate = (inputValue: string) => {
     if (inputValue === "") {
       toast.error("Failed to change name: Name is not allowed to be empty!");
-    } else if (inputValue.length < 3) {
+    } else if (inputValue.length < 3 || inputValue.length > 12) {
       toast.error(
-        "Failed to change name: Name must contain at least 3 characters",
+        "Failed to change name: Name must contain between 3 to 12 characters",
       );
+    } else if (/\s/.test(inputValue)) {
+      toast.error("Failed to change name: Name must not contain spaces");
     } else {
       const updateUserDto = {
         username: inputValue,
@@ -140,7 +142,7 @@ const NameStep = () => {
               >
                 <h2 className="text-2xl font-roboto text-timberwolf">Name</h2>
                 <p className="text-md text-dimgrey">
-                  Name must contain more than 3 characters.
+                  Name must contain between 3 and 12 characters.
                 </p>
               </motion.div>
               <input
