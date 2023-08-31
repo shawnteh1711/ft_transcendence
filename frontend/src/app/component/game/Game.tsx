@@ -7,7 +7,6 @@ import useGameStore from "@/store/useGameStore";
 import router from "next/router";
 import ScoreExplosion from "@/components/game/ScoreExplosion";
 import game from "../../../../pages/game";
-import useGameAnimeStore from "@/store/useGameAnimeStore";
 import useUserStore from "@/store/useUserStore";
 import useFetchUserData from "@/app/webhook/UseFetchUserData";
 
@@ -162,10 +161,6 @@ const Game = () => {
     state.setGameData,
   ]);
   // const [setUserData] = useUserStore((state) => [state.setUserData]);
-  const [gameAnime, setGameAnime] = useGameAnimeStore((state) => [
-    state.gameAnime,
-    state.setGameAnime,
-  ]);
   const fetchUserData = useFetchUserData();
 
   const socket = useContext(SocketContext);
@@ -386,21 +381,6 @@ const Game = () => {
     });
 
     socket?.on("update-score", (score: ScoreBoard) => {
-      if (score.winner === "p1") {
-        setGameAnime({
-          ...gameAnime,
-          startAnimate: true,
-          winPlayer: 1,
-          yPos: score.ballYPos,
-        });
-      } else if (score.winner === "p2") {
-        setGameAnime({
-          ...gameAnime,
-          startAnimate: true,
-          winPlayer: 2,
-          yPos: score.ballYPos,
-        });
-      }
       setGameData({
         ...gameData,
         playerOne: gameState!.player1User,
@@ -468,7 +448,8 @@ const Game = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
 
-  return <ScoreExplosion />;
+  //   return <ScoreExplosion />;
+  return null;
 };
 
 export default Game;

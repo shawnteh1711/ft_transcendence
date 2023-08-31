@@ -18,15 +18,34 @@ const SoundEffects = ({ playing }: { playing: boolean }) => {
 interface SpriteAnimationContainerProps {
   textures: any[];
   gameAnime: GameAnime;
-  postAction: () => void;
+  postAnimateAction: () => void;
+  postGameAction: () => void;
 }
 
 const SpriteAnimationContainer = ({
   textures,
   gameAnime,
-  postAction,
+  postAnimateAction,
+  postGameAction,
 }: SpriteAnimationContainerProps) => {
   const app = usePixiApp();
+
+  useEffect(() => {
+    if (
+      gameAnime.startAnimate === false &&
+      gameAnime.animeCleared === false &&
+      gameAnime.gameEnd === true &&
+      app !== null
+    ) {
+      console.log("DESTROYING", gameAnime);
+      app.stop();
+      console.log("APP.STOPPED");
+      app.destroy(true);
+      console.log("APP.DESTROYED");
+      postGameAction();
+      console.log("POSTGAMEACTIOn");
+    }
+  }, [gameAnime.gameEnd]);
 
   useEffect(() => {
     if (
@@ -52,8 +71,10 @@ const SpriteAnimationContainer = ({
       app.stage.addChild(anime);
 
       anime.onComplete = () => {
+        console.log("COMPLETE");
         app.stage.removeChild(anime);
-        postAction();
+        anime.destroy();
+        postAnimateAction();
       };
 
       anime.play();
@@ -108,8 +129,11 @@ const ScoreExplosion = () => {
         <SpriteAnimationContainer
           textures={textures}
           gameAnime={gameAnime}
-          postAction={() =>
+          postAnimateAction={() =>
             setGameAnime({ ...gameAnime, startAnimate: false, winPlayer: 0 })
+          }
+          postGameAction={() =>
+            setGameAnime({ ...gameAnime, animeCleared: true })
           }
         />
       </Stage>
