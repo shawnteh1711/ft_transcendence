@@ -116,9 +116,7 @@ const FriendRequest = ( {userId, currUser, friendRequestArray, setFriendRequestA
             friendRequestId: friendRequestId,
           });
           setFriendRequestStatus((prevStatus) => ({ ...prevStatus, [declinerId]: false }));
-          const updatedFriendRequestArray = friendRequestArray.filter(
-            (request) => request.requestId !== friendRequestId
-          );
+          setFriendRequests((prevFriendRequests) => prevFriendRequests.filter((request) => request.id !== friendRequestId));
         };
         toast(
           <ConfirmationModel
