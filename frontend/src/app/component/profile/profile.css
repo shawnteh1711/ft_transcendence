@@ -7,10 +7,6 @@
 .login-button:visited, .login-button:active {
     color: var(--background-dark);
 }
-  
-.icon-container:hover {
-    /* background-color: #000; */
-} 
 
 header {
     display: flex;
@@ -217,6 +213,7 @@ td:last-child {
     justify-content: space-between;
     gap: 30px;
     padding: 20px;
+    z-index: -10;
 }
 
 .circle-top, .circle-bottom {

@@ -42,17 +42,22 @@ const FriendList = () => {
           const existingRequest = prevArray.find(
             (request: any) => request.requestId === receivedFriendRequest.id,
           );
+          console.log('exsting request', existingRequest);
+          
 
           if (existingRequest) {
             const updatedArray = prevArray.map((request: any) => {
               if (request.requestId === receivedFriendRequest.id) {
                 return {
                   ...request,
+                  senderId: receivedFriendRequest?.sender?.id,
+                  receiverId: receivedFriendRequest?.receiver?.id,
                   status: receivedFriendRequest.status,
                 };
               }
               return request;
             });
+            console.log('updatedArray', updatedArray);
             return updatedArray;
           } else {
             const newRequest = {
@@ -99,6 +104,7 @@ const FriendList = () => {
             filteredList.push(user);
           }
         }
+        console.log('filteredList', filteredList);
         setUserList(filteredList);
         setFilteredUsersList(filteredList);
       } else {
@@ -122,7 +128,7 @@ const FriendList = () => {
 
   const cancelFriendRequest = (userId: number) => {
     const friendRequests = friendRequestArray.find(
-      (request: any) => request.receiverId === userId,
+      (request: any) => request.receiverId === userId
     );
     socket?.emit("friend-request-cancel", {
       senderId: userData.id,

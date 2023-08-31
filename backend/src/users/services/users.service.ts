@@ -188,4 +188,8 @@ export class UsersService {
       throw new InternalServerErrorException('Failed to find user', error);
     }
   }
+
+  async turnAllUsersOffline() {
+    await this.usersRepository.update({}, { online: false });
+  }
 }

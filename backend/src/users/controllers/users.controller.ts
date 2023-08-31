@@ -114,4 +114,10 @@ export class UsersController {
   async getUserProfile(@Param('id') id: number) {
     return await this.userService.findUsersByIdWithRelation(id);
   }
+
+  @Post('turn-offline')
+  async turnAllUsersOffline() {
+    await this.userService.turnAllUsersOffline();
+    return { message: 'All users turned offline' };
+  }
 }

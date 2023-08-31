@@ -186,6 +186,7 @@ export class FriendService {
   }
 
   async unFriend(friendRequestId: number) {
+    console.log('unfriend', friendRequestId);
     await this.friendRepository.update(friendRequestId, {
       status: FriendStatus.Cancel,
     });

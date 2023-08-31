@@ -102,6 +102,13 @@ p, span {
     margin-right: 10px;
 }
 
+.friend-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 /* button {
     @apply bg-[var(--background-grey)] text-[var(--background-light-grey)] rounded-md px-2 py-1;
 } */

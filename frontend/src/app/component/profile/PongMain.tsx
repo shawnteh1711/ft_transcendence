@@ -6,6 +6,7 @@ import formatDateMalaysia from "../../utils/formatDateMalaysia";
 import MatchMaking from "./MatchMaking";
 import Achievement from "./Achievement";
 import UserProfile from "@/app/webhook/UserProfile";
+import Image from "next/image";
 
 const PongMain: React.FC<any> = ({ userId }) => {
   // const { data: session, status } = useSession();
@@ -42,8 +43,8 @@ const PongMain: React.FC<any> = ({ userId }) => {
     <div className="profile-page">
       <div className="top-profile">
         <div className="avatar-section">
-          <Avatar src={avatar} alt="user avartar" width={100} height={100} />
-          {/* <Image className="w-[100px] h-[100px] rounded-full object-cover" src={ avatar } alt='user avatar' width={100} height={100} /> */}
+            <Image className="w-15 h-15 rounded-full object-cover" src={avatar} alt="user avatar" width={150} height={150}/>
+            {/* <Avatar src={avatar} alt="user avartar" width={100} height={100} /> */}
           <div className="username">
             <p>{username}</p>
             <p className="text-myyellow">Joined {joinDate} </p>
