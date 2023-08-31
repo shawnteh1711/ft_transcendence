@@ -333,7 +333,7 @@ export class MatchHistoryService {
       p1_mmr: createMatchHistoryDto.p1_mmr,
       p2_mmr: createMatchHistoryDto.p2_mmr,
     });
-    console.log(newMatch);
+    // console.log(newMatch);
     try {
       await this.matchHistoryRepository.save(newMatch);
       await this.updateMmr(newMatch);

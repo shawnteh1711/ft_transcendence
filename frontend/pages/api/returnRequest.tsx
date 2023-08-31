@@ -13,7 +13,6 @@ export default async function returnRequest(
     };
     res.status(200).json(requestInfo);
   } catch (error) {
-    console.log('error: ', error);
     res.status(500).json({ statusCode: 500, message: error });
   }
 }

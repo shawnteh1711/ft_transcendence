@@ -42,9 +42,6 @@ const FriendList = () => {
           const existingRequest = prevArray.find(
             (request: any) => request.requestId === receivedFriendRequest.id,
           );
-          console.log('exsting request', existingRequest);
-          
-
           if (existingRequest) {
             const updatedArray = prevArray.map((request: any) => {
               if (request.requestId === receivedFriendRequest.id) {
@@ -57,7 +54,6 @@ const FriendList = () => {
               }
               return request;
             });
-            console.log('updatedArray', updatedArray);
             return updatedArray;
           } else {
             const newRequest = {
@@ -104,7 +100,6 @@ const FriendList = () => {
             filteredList.push(user);
           }
         }
-        console.log('filteredList', filteredList);
         setUserList(filteredList);
         setFilteredUsersList(filteredList);
       } else {

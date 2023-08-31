@@ -186,7 +186,6 @@ export class FriendService {
   }
 
   async unFriend(friendRequestId: number) {
-    console.log('unfriend', friendRequestId);
     await this.friendRepository.update(friendRequestId, {
       status: FriendStatus.Cancel,
     });
@@ -448,7 +447,6 @@ export class FriendService {
       },
       relations: ['sender', 'receiver'],
     });
-    console.log(friend);
     if (friend == undefined) {
       friend = await this.friendRepository.find({
         where: {

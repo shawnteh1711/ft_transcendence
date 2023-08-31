@@ -130,7 +130,6 @@ export class GameService {
     // update friends in game status
     const friends = await this.friendService.getFriendsBoth(param.user.id);
     for (const friend of friends) {
-      console.log('Friend: ', friend);
       await this.friendService.update(friend.id, {
         ...friend,
         roomId: roomId,
@@ -203,9 +202,7 @@ export class GameService {
 
     // update friends in game status
     const friends = await this.friendService.getFriendsBoth(param.pTwo.id);
-    console.log('Friends: ', friends);
     for (const friend of friends) {
-      console.log('Friend: ', friend);
       await this.friendService.update(friend.id, {
         ...friend,
         roomId: roomId,
@@ -240,7 +237,6 @@ export class GameService {
 
   /* remove inviter from private room after invitee declines invitation */
   declineInvitation(param: DeclineGameInvitationParams) {
-    console.log('Declined Game Invitation');
     const { roomId } = this.findAvailableRoomById(param.rooms, param.user.id);
     this.clearRoomIdInFriend(param.user.id);
     param.rooms.delete(roomId);
@@ -599,7 +595,6 @@ export class GameService {
         p2_mmr: 1000,
       });
       param.server.to(param.roomId).emit('game-over');
-      console.log('Game Over');
       this.gameOver(param);
     }
   }
@@ -678,11 +673,11 @@ export class GameService {
       param.gameInfo.leftPaddle.position.x -
       param.gameProperties.leftPaddle.width / 2;
     if (leftBallPos > leftPaddlePos && leftBallPos < leftPaddlePos + 20) {
-      console.log('hit left paddle');
+      // console.log('hit left paddle');
       return 1;
     }
     if (rightBallPos > rightPaddlePos && rightBallPos < rightPaddlePos + 20) {
-      console.log('hit right paddle');
+      // console.log('hit right paddle');
       return 1;
     }
     return 0;
@@ -736,7 +731,7 @@ export class GameService {
       await wavPlayer.play({
         path: './public/sounds/hit.wav',
       });
-      console.log('The wav file started to be played successfully.');
+      // console.log('The wav file started to be played successfully.');
     } catch (error) {
       console.error('The wav file failed to be played.', error);
     }

@@ -14,7 +14,7 @@ const UserData = () => {
         if (response.ok) {
           const userData = await response.json();
           setUserData(userData);
-          console.log("userData", userData);
+          // console.log("userData", userData);
         } else {
           throw new Error("User not found");
         }

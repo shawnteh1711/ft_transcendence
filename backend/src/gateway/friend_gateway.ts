@@ -93,7 +93,6 @@ export class FriendGateway {
       receiverId,
     );
     // this.server.emit('friend-request', friendRequests);
-    console.log('friendRequests', friendRequests);
     this.server.to(`${receiverId}`).emit('friend-request', friendRequests);
   }
 
