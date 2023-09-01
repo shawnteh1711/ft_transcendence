@@ -69,6 +69,9 @@ export interface GameInvitationParams {
 
 export interface InitializeGameParams {
   roomId: string;
+  spectate: number;
+  pOneScore: number;
+  pTwoScore: number;
   pOneId: number;
   pTwoId: number;
   gameProperties: GameElements;
