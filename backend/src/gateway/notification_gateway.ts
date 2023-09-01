@@ -15,12 +15,11 @@ export class NotificationGateway implements OnModuleInit {
 
   async onModuleInit() {
     this.server.on('connection', (socket) => {
-      console.log(socket.id, 'connected');
-
+      // console.log(socket.id, 'connected');
       const heartbeat = setInterval(() => {
         if (!socket.connected) {
           clearInterval(heartbeat);
-          console.log('heartbeat stopped');
+          // console.log('heartbeat stopped');
           if (socket.data.userId) {
             // this.updateUserStatus(+socket.data.userId, false);
             // this.connectedUser.delete(socket.data.userId);
@@ -48,7 +47,7 @@ export class NotificationGateway implements OnModuleInit {
 
       socket.on('leave-room', () => {
         if (socket.data.userId) {
-          console.log('User left room: ' + socket.data.userId);
+          // console.log('User left room: ' + socket.data.userId);
           socket.leave(socket.data.userId);
           this.updateUserStatus(socket.data.userId, false);
           this.connectedUser.delete(socket.data.userId);
@@ -72,7 +71,7 @@ export class NotificationGateway implements OnModuleInit {
 
       socket.on('reconnect', async () => {
         if (socket.data.userId) {
-          console.log('User reconnected: ' + socket.data.userId);
+          // console.log('User reconnected: ' + socket.data.userId);
           this.updateUserStatus(+socket.data.userId, true);
           this.connectedUser.set(socket.data.userId, socket);
           this.server
@@ -83,9 +82,9 @@ export class NotificationGateway implements OnModuleInit {
       });
       socket.on('disconnect', async () => {
         if (socket.data.userId) {
-          console.log('User disconnected: ' + socket.data.userId);
+          // console.log('User disconnected: ' + socket.data.userId);
           this.connectedUser.delete(socket.data.userId);
-          // await this.updateUserStatus(+socket.data.userId, false);
+          await this.updateUserStatus(+socket.data.userId, false);
           this.server
             .to(socket.data.userId.toString())
             .emit('online-status-changed', { isOnline: false });
@@ -104,7 +103,7 @@ export class NotificationGateway implements OnModuleInit {
     }
     const user = await this.usersService.findUsersById(parsedUserId);
     if (user) {
-      await this.usersService.updateUser(parsedUserId, {
+      return await this.usersService.updateUser(parsedUserId, {
         online: isOnline,
       });
     }
@@ -119,7 +118,7 @@ export class NotificationGateway implements OnModuleInit {
   private async cleanup() {
     console.log('Server is shutting down. Setting all users offline...');
     for (const [userId, socket] of this.connectedUser.entries()) {
-      await this.updateUserStatus(+userId, false);
+      const user = await this.updateUserStatus(+userId, false);
       socket.disconnect(true);
     }
     process.exit(0);

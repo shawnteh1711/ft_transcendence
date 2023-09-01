@@ -22,7 +22,6 @@ export default class AchievementSeed implements Seeder {
     dataSource: DataSource,
     // factoryManager: SeederFactoryManager,
   ): Promise<any> {
-    console.log('AchievementSeed');
     const achievementRepository = dataSource.getRepository(Achievement);
     for (const achievement of achievementData) {
       const existingAchievement = await achievementRepository.findOne({

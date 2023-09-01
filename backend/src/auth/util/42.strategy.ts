@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 // import { VerifyCallback } from "passport-jwt";
 // import { Strategy } from 'passport-42';
@@ -26,7 +26,12 @@ export class FortyTwoStrategy extends PassportStrategy(Strategy, '42') {
     done: VerifyCallback,
   ): Promise<void> {
     const authUser = await this.authService.findOneOrCreate(profile);
-    done(null, authUser);
+    if (authUser.online) {
+      // User is already logged in, prevent the login
+      done(null, false, { message: 'User is already logged in' });
+    } else {
+      done(null, authUser);
+    }
   }
 
   // async validate(accessToken: string, refreshToken: string, profile: Profile, done: VerifyCallback): Promise<void> {

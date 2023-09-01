@@ -22,9 +22,7 @@ export class UsersService {
   ) {}
 
   async createUser(createUserDto: CreateUserDto) {
-    console.log(createUserDto);
     const newUser = this.usersRepository.create(createUserDto);
-    console.log('test', newUser);
     try {
       const dto = new CreateStatDto();
       const returnUser = await this.usersRepository.save(newUser);
@@ -74,7 +72,6 @@ export class UsersService {
     if (!user) throw new NotFoundException(`User with ID ${id} not found`);
     try {
       const user = await this.findUsersById(id);
-      console.log(user);
       if (!user) throw new NotFoundException(`User with ID ${id} not found`);
       await this.usersRepository.delete(id);
       //   await this.achievementService.deleteUserAchvById(id);
@@ -187,5 +184,9 @@ export class UsersService {
     } catch (error) {
       throw new InternalServerErrorException('Failed to find user', error);
     }
+  }
+
+  async turnAllUsersOffline() {
+    await this.usersRepository.update({}, { online: false });
   }
 }

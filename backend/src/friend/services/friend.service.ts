@@ -447,7 +447,6 @@ export class FriendService {
       },
       relations: ['sender', 'receiver'],
     });
-    console.log(friend);
     if (friend == undefined) {
       friend = await this.friendRepository.find({
         where: {

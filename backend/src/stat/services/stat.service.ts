@@ -130,7 +130,7 @@ export class StatService {
       current_mmr: createStatDto.current_mmr,
       best_mmr: createStatDto.best_mmr,
     });
-    console.log(newStat);
+    // console.log(newStat);
     try {
       await this.statRepository.save(newStat);
     } catch (error) {

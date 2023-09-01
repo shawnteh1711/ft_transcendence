@@ -42,12 +42,13 @@ const FriendList = () => {
           const existingRequest = prevArray.find(
             (request: any) => request.requestId === receivedFriendRequest.id,
           );
-
           if (existingRequest) {
             const updatedArray = prevArray.map((request: any) => {
               if (request.requestId === receivedFriendRequest.id) {
                 return {
                   ...request,
+                  senderId: receivedFriendRequest?.sender?.id,
+                  receiverId: receivedFriendRequest?.receiver?.id,
                   status: receivedFriendRequest.status,
                 };
               }
@@ -122,7 +123,7 @@ const FriendList = () => {
 
   const cancelFriendRequest = (userId: number) => {
     const friendRequests = friendRequestArray.find(
-      (request: any) => request.receiverId === userId,
+      (request: any) => request.receiverId === userId
     );
     socket?.emit("friend-request-cancel", {
       senderId: userData.id,

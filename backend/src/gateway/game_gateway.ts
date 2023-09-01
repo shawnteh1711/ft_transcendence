@@ -75,7 +75,7 @@ export class GameGateway implements OnModuleInit {
     const friendId = await param.friend?.id;
     const test = await this.friendService.getGameStatus(friendId);
     if (test.length == 0) {
-      console.log('invite sent');
+      // console.log('invite sent');
       param.user.socketId = client.id;
       param.user.gameMode = 'private';
       this.gameService.inviteGame({

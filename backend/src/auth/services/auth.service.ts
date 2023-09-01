@@ -99,7 +99,7 @@ export class AuthService {
       newUser.avatar =
         profile._json.image.link ||
         `${process.env.NEST_HOST}/public/default_avatar.png`;
-      newUser.online = false;
+      newUser.online = true;
       returnUser = await this.userService.createUser(newUser);
     }
     return returnUser;

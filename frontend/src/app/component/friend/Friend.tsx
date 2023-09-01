@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserTimes, faBan } from '@fortawesome/free-solid-svg-icons';
 import { toast } from "react-hot-toast";
 import ConfirmationModel from "./ConfirmationModel";
+import "./friend.css";
 
 interface FriendProps {
   userDataId: number;
@@ -165,12 +166,12 @@ const Friend = ({
         friends.length > 0 ? (
         friends.map((friend) => (
           <div className="flex items-center gap-10 p-10" key={friend?.id}>
-            <div className="h-22 w-20">
+            <div className="friend-avatar">
               <Avatar
                 src={friend?.avatar}
                 alt="user avatar"
-                width={50}
-                height={50}
+                width={80}
+                height={80}
                 onClick={() => toUserProfile(friend?.id)}
               />
             </div>

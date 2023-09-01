@@ -26,11 +26,11 @@ const FriendRequest = ( {userId, currUser, friendRequestArray, setFriendRequestA
   useEffect(() => {
     if (userId) {
       socket?.on('friend-request', handleFriendRequestReceived);
-      const storedStatus = localStorage.getItem("friendRequestStatus");
+      const storedStatus = sessionStorage.getItem("friendRequestStatus");
       if (storedStatus) {
           setFriendRequestStatus(JSON.parse(storedStatus));
       }
-      const storedFriendRequests = localStorage.getItem("friendRequestArray");
+      const storedFriendRequests = sessionStorage.getItem("friendRequestArray");
       if (storedFriendRequests) {
         setFriendRequestArray(JSON.parse(storedFriendRequests));
       }
