@@ -90,7 +90,7 @@ const LoadingScreen = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 z-50">
-      <div className="loading-container bg-black absolute top-20 w-4/5 h-3/5 left-1/2 transform -translate-x-1/2">
+      <div className="loading-container bg-black absolute top-30 w-4/5 h-3/5 left-1/2 transform -translate-x-1/2">
         <div className="flex justify-between bg-black p-4 rounded-lg h-full">
           <div className="flex flex-col items-center justify-top">
             <p className="text-white">Player 1: {player1User?.username}</p>

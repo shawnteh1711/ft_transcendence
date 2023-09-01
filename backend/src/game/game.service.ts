@@ -43,7 +43,7 @@ export class GameService {
   logRooms(rooms: Map<string, UserData[]>) {
     for (const [roomId, players] of rooms.entries()) {
       const usernames = players.map((player) => player.username).join(', ');
-      console.log(`Room ${roomId}: [${usernames}]`);
+      // console.log(`Room ${roomId}: [${usernames}]`);
     }
   }
 
