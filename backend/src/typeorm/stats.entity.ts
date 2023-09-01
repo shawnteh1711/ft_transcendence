@@ -39,4 +39,11 @@ export class Stat {
 
   @Column({ default: 0 })
   best_mmr: number;
+
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
+  last_match: Date;
 }

@@ -131,7 +131,7 @@ const NameStep = () => {
       }}
       exit={{ y: "-100vh" }}
     >
-      <div className="w-[500px] h-fit items-center justify-start">
+      <div className="w-[530px] h-fit items-center justify-start">
         <div className="flex w-full h-full items-center justify-start">
           {showName ? (
             <div className="flex flex-col w-full h-full border-dashed border-2 border-dimgrey rounded-3xl shadow-xl shadow-jetblack px-10 py-8">
