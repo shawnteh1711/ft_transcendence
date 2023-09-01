@@ -109,11 +109,11 @@ export class GameService {
       param.user.id,
     ).roomId;
     if (existingRoomId) {
-      console.log(
-        'User is already in a room',
-        param.user.username,
-        existingRoomId,
-      );
+      // console.log(
+      //   'User is already in a room',
+      //   param.user.username,
+      //   existingRoomId,
+      // );
       param.client.emit('in-room', { roomId: existingRoomId });
       return;
     }
@@ -573,7 +573,7 @@ export class GameService {
 
   /* set winner uid, create match-history, end game */
   async handleGameEnd(param: HandleGameStateParams) {
-    const endScore = 2;
+    const endScore = 5;
     if (
       param.gameInfo.pOneScore == endScore ||
       param.gameInfo.pTwoScore == endScore
@@ -689,7 +689,7 @@ export class GameService {
       param.server
         .to(param.roomId)
         .emit('ball-position', param.gameInfo.ball.position);
-      if (this.checkBallHit(param)) this.playSound();
+      // if (this.checkBallHit(param)) this.playSound();
 
       if (this.checkBallOutOfBounds(param)) {
         this.resetBallPosition(param);

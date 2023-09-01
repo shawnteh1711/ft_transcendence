@@ -27,9 +27,6 @@ const MatchMaking = () => {
   useEffect(() => {
     if (socket && userData.id) {
       socket?.on("loading-screen", ({ roomId, players }: any) => {
-        console.log("loading-screen");
-        console.log("loading-screen", roomId, players);
-
         setPlayer1User(players[0].player);
         setPlayer2User(players[1].player);
       });
@@ -38,10 +35,9 @@ const MatchMaking = () => {
         setIsMatchmaking(false);
         setPlayer1User(null);
         setPlayer2User(null);
-        console.log("opponent-disconnected");
       });
       socket?.on("room-closed", () => {
-        console.log("room-closed");
+        // console.log("room-closed");
       });
     }
     return () => {
@@ -79,7 +75,7 @@ const MatchMaking = () => {
       setRoomId(roomId);
       sessionStorage.setItem("roomId", roomId);
     });
-    console.log("roomId", roomId);
+    // console.log("roomId", roomId);
     return () => {
       socket?.off("in-room");
       socket?.off("joined-room");

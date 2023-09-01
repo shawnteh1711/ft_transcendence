@@ -11,7 +11,7 @@ const Logout = () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_NEST_HOST}/auth/logout`, {
         credentials: "include",
       });
-      console.log("logout response", response);
+      // console.log("logout response", response);
       router.push("/login");
     } catch (error) {
       setError("Error loggin out");

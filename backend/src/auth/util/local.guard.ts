@@ -5,7 +5,7 @@ import { Request } from 'express';
 export class AuthenticatedGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req: Request = context.switchToHttp().getRequest();
-    console.log('req is authenticated', req.isAuthenticated());
+    // console.log('req is authenticated', req.isAuthenticated());
     return req.isAuthenticated();
   }
 

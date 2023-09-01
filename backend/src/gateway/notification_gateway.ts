@@ -111,12 +111,12 @@ export class NotificationGateway implements OnModuleInit {
 
   private logConnectedUsers() {
     for (const [userId, socket] of this.connectedUser.entries()) {
-      console.log('User ID:', userId, ', Socket ID:', socket.id);
+      // console.log('User ID:', userId, ', Socket ID:', socket.id);
     }
   }
 
   private async cleanup() {
-    console.log('Server is shutting down. Setting all users offline...');
+    // console.log('Server is shutting down. Setting all users offline...');
     for (const [userId, socket] of this.connectedUser.entries()) {
       const user = await this.updateUserStatus(+userId, false);
       socket.disconnect(true);

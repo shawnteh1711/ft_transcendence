@@ -59,7 +59,7 @@ export class ChannelUserService {
         channel: { channel_uid: channel_id },
       },
     });
-    console.log(user_id, channel_id, channel_user);
+    // console.log(user_id, channel_id, channel_user);
     return channel_user.role;
   }
 
@@ -172,7 +172,7 @@ export class ChannelUserService {
         if (!channelOwner) {
           throw new ForbiddenException('User not in channel');
         }
-        console.log('channel owner', channelOwner);
+        // console.log('channel owner', channelOwner);
         if (
           channelOwner.role != Role.Owner &&
           channelOwner.role != Role.Admin
@@ -186,7 +186,7 @@ export class ChannelUserService {
         if (!channelUser) {
           throw new ForbiddenException('User to be updated not in channel');
         }
-        console.log('channel user', channelUser);
+        // console.log('channel user', channelUser);
         return await this.channelUsersRepository.update(
           channelUser.channeluser_uid,
           {
@@ -220,7 +220,7 @@ export class ChannelUserService {
         if (!channelOwner) {
           throw new ForbiddenException('User not in channel');
         }
-        console.log('channel owner', channelOwner);
+        // console.log('channel owner', channelOwner);
         if (
           channelOwner.role != Role.Owner &&
           channelOwner.role != Role.Admin
@@ -234,7 +234,7 @@ export class ChannelUserService {
         if (!channelUser) {
           throw new ForbiddenException('User to be updated not in channel');
         }
-        console.log('channel user', channelUser);
+        // console.log('channel user', channelUser);
         return await this.channelUsersRepository.update(
           channelUser.channeluser_uid,
           {
@@ -274,11 +274,11 @@ export class ChannelUserService {
 
   async test(test: number) {
     const date = new Date();
-    console.log('1', date);
+    // console.log('1', date);
     // const n = 1;
     date.setDate(date.getDate() + test);
-    console.log('2', date);
+    // console.log('2', date);
     // date.setDate(date.getDate() + n);
-    console.log('3', date);
+    // console.log('3', date);
   }
 }

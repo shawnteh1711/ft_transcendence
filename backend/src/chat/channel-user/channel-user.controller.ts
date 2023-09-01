@@ -59,7 +59,7 @@ export class ChannelUserController {
     @Param('user_id', ParseIntPipe) user_id: number,
     @Param('channel_id', ParseIntPipe) channel_id: number,
   ) {
-    console.log(user_id, channel_id);
+    // console.log(user_id, channel_id);
     return this.channelUserService.getRoleOfUserByUserIdAndChannelId(
       user_id,
       channel_id,

@@ -15,9 +15,9 @@ const InviteFriendGame = ({ user, friend, socket}: InviteFriendGameProps) => {
 
   const handleInviteFriendGame = () => {
    
-    console.log(`Inviting friend to game`);
-    console.log(`User:`, user);
-    console.log(`Friend:`, friend);
+    // console.log(`Inviting friend to game`);
+    // console.log(`User:`, user);
+    // console.log(`Friend:`, friend);
     socket?.emit('invite-game', {
       user: user,
       friend: friend,

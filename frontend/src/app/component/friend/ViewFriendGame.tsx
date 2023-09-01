@@ -21,7 +21,7 @@ const ViewFriendGame = ({ roomId }: any) => {
   }, [socket]);
 
   const handleViewGame = () => {
-    console.log(`Viewing game of friend with ID: ${roomId}`);
+    // console.log(`Viewing game of friend with ID: ${roomId}`);
     socket?.emit("view-game", {
       roomId: roomId,
     });

@@ -69,8 +69,6 @@ const LoadingScreen = ({
     }, 1000);
 
     const handleResize = () => {
-      console.log("handleResize");
-
       updateLoadingBarWidth(
         redBorder,
         loadingContainer,

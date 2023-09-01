@@ -320,11 +320,11 @@ export class ChannelService {
       const pwMatches = await argon.verify(channel.channel_hash, oldPassword);
 
       if (!pwMatches) {
-        console.log('Password Mismatch');
+        // console.log('Password Mismatch');
       } else {
-        console.log('Password Matches');
+        // console.log('Password Matches');
         if (newPassword != '') {
-          console.log('Password changed');
+          // console.log('Password changed');
           const channel_hash = await argon.hash(newPassword);
           await this.channelsRepository.save({
             channel_uid: channelId,
@@ -343,7 +343,7 @@ export class ChannelService {
   ) {
     this.validateUser(user);
     const channel = await this.findChannelById(channelId);
-    console.log(channel);
+    // console.log(channel);
 
     const channelUser =
       await this.channelUserService.findChannelUserByChannelIdAndUserId(

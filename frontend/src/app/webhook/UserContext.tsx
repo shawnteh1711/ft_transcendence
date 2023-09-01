@@ -22,7 +22,7 @@ export const UseUserContext = ({ children }: UserProviderProps) => {
       if (response.ok) {
         const userData = await response.json();
         setUserData(userData);
-        console.log("userData", userData);
+        // console.log("userData", userData);
       } else {
         throw new Error("User not found");
       }
@@ -66,7 +66,7 @@ const UserData = () => {
         //     router.push('/login');
         // }
         setUserData(userData);
-        console.log("userData", userData);
+        // console.log("userData", userData);
       } else {
         throw new Error("User not found");
       }

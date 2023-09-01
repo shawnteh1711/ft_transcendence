@@ -14,8 +14,7 @@ const FriendRequestNotification = ( { friendRequest } : FriendRequestNotificatio
     const handleFriendRequestWebhook = async (body: any) => {
         //  const { event, data } = body;
         //  const { senderId, receiverId } = data;
-        console.log('body', body);
-        
+        // console.log('body', body);
         //  setFriendRequest(body);
     };
 

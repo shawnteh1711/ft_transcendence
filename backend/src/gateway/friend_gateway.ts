@@ -27,7 +27,7 @@ export class FriendGateway {
   private async updateUserStatus(userId: any, isOnline: boolean) {
     const parsedUserId = parseInt(userId, 10);
     if (isNaN(parsedUserId)) {
-      console.log('Invalid userId');
+      // console.log('Invalid userId');
       // throw new BadRequestException('Invalid userId');
     }
     const user = await this.usersService.findUsersById(parsedUserId);

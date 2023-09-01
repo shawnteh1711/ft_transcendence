@@ -38,14 +38,14 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async signIn({ profile, user, account }) {
       if (!user) return false;
-      console.log("user", user);
+      // console.log("user", user);
       return true;
     },
 
     async session({ session, token, trigger, user, newSession }) {
       session.user = user;
-      console.log("session", session);
-      console.log("session.user", session.user);
+      // console.log("session", session);
+      // console.log("session.user", session.user);
       return session;
     },
   },

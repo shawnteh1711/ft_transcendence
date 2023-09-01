@@ -42,7 +42,7 @@ export class MessageService {
       // sender = await this.userService.findUsersById(1);
       const channel = await this.channelService.findChannelById(dto.channel_id);
       if (!channel) throw new ForbiddenException('channel not found');
-      console.log(channel);
+      // console.log(channel);
       // const channelUser =
       //   await this.channelUserService.findChannelUserByChannelIdAndUserId(
       //     channel.channel_uid,
@@ -69,7 +69,7 @@ export class MessageService {
   }
 
   test() {
-    console.log('test');
+    // console.log('test');
     return 'test';
   }
 

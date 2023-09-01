@@ -13,7 +13,7 @@ const SearchBar = ({ onSearch, onReset }: SearchBarProps) => {
 
   const handlePress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      console.log("searchQuery", searchQuery);
+      // console.log("searchQuery", searchQuery);
       if (searchQuery === "") {
         onReset();
       } else {

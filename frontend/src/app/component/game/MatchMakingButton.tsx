@@ -44,10 +44,10 @@ const MatchMakingButton = ({
         setIsMatchmaking(false);
         setPlayer1User(null);
         setPlayer2User(null);
-        console.log("opponent-disconnected");
+        // console.log("opponent-disconnected");
       });
       socket?.on("room-closed", () => {
-        console.log("room-closed");
+        // console.log("room-closed");
       });
     }
     return () => {

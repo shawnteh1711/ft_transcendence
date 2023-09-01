@@ -31,9 +31,9 @@ export class MessageGateway implements OnModuleInit {
       socket.on(
         'send-message',
         async (message, messageType, channelId, userId) => {
-          console.log(message, messageType, channelId, userId);
+          // console.log(message, messageType, channelId, userId);
           const user = await this.userService.findUsersById(userId);
-          console.log(user);
+          // console.log(user);
           const dto: CreateMessageDto = {
             message_content: message,
             message_type: messageType,
@@ -43,7 +43,7 @@ export class MessageGateway implements OnModuleInit {
             dto,
             user,
           );
-          console.log(sent_message);
+          // console.log(sent_message);
           this.server.emit('refresh-data');
           // this.server.emit('message-recieved', sent_message, channelId);
         },
