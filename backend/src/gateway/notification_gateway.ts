@@ -41,7 +41,7 @@ export class NotificationGateway implements OnModuleInit {
               .to(socket.data.userId.toString())
               .emit('online-status-changed', { isOnline: true });
           }
-          this.logConnectedUsers();
+          // this.logConnectedUsers();
         }
       });
 
@@ -54,7 +54,7 @@ export class NotificationGateway implements OnModuleInit {
           this.server
             .to(socket.data.userId.toString())
             .emit('online-status-changed', { isOnline: false });
-          this.logConnectedUsers();
+          // this.logConnectedUsers();
         }
       });
 
@@ -77,7 +77,7 @@ export class NotificationGateway implements OnModuleInit {
           this.server
             .to(socket.data.userId.toString())
             .emit('online-status-changed', { isOnline: true });
-          this.logConnectedUsers();
+          // this.logConnectedUsers();
         }
       });
       socket.on('disconnect', async () => {
@@ -88,7 +88,7 @@ export class NotificationGateway implements OnModuleInit {
           this.server
             .to(socket.data.userId.toString())
             .emit('online-status-changed', { isOnline: false });
-          this.logConnectedUsers();
+          // this.logConnectedUsers();
         }
       });
       process.on('SIGINT', () => this.cleanup());

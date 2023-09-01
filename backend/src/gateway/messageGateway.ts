@@ -28,8 +28,6 @@ export class MessageGateway implements OnModuleInit {
 
   async onModuleInit() {
     this.server.on('connection', (socket) => {
-      console.log(socket.id, 'message connected');
-
       socket.on(
         'send-message',
         async (message, messageType, channelId, userId) => {

@@ -29,8 +29,6 @@ export class ChannelGateway implements OnModuleInit {
 
   async onModuleInit() {
     this.server.on('connection', (socket) => {
-      console.log(socket.id, 'channel socket connected');
-
       socket.on(
         'create-channel',
         async (channelName, channelType, channelPassword, userId) => {

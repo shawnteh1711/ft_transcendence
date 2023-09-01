@@ -62,7 +62,7 @@ async function bootstrap() {
   app.use(passport.session());
   app.use((req, res, next) => {
     const status = req.isAuthenticated() ? 'logged in' : 'logged out';
-    console.log('status:', status, '\n', 'path', req.path, '\n');
+    // console.log('status:', status, '\n', 'path', req.path, '\n');
     // console.log('session', req.session, '\n');
     const allowedRoutes = ['/auth/login', '/auth/callback', '/auth/logout'];
     if (allowedRoutes.includes(req.path)) {

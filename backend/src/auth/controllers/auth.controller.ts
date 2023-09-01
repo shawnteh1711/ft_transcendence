@@ -38,7 +38,6 @@ export class AuthController {
   @UseGuards(FortyTwoAuthGuard)
   @Get('callback')
   async callback(@Req() req: Request, @Res() res: Response): Promise<void> {
-    console.log('callback');
     return res.redirect(`${process.env.NEXT_HOST}/setup`);
   }
 
@@ -151,7 +150,7 @@ export class AuthController {
       await this.authService.clearUserSession(req);
       await this.authService.clearUserCookies(res);
       req.logout(() => {
-        console.log('User logged out successfully');
+        // console.log('User logged out successfully');
       });
     }
     res.json({ message: 'User logout' });

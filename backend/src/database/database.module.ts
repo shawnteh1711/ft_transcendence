@@ -45,10 +45,10 @@ export class DatabaseModule {
     const dbPort = this.configService.get<number>('DB_PORT');
     const dbName = this.configService.get<string>('DB_USER');
 
-    console.log(`DB_HOST: ${dbHost}`);
-    console.log(`DB_NAME: ${dbDatabase}`);
-    console.log(`DB_PASSWORD: ${dbPassword}`);
-    console.log(`DB_PORT: ${dbPort}`);
-    console.log(`DB_USER: ${dbName}`);
+    // console.log(`DB_HOST: ${dbHost}`);
+    // console.log(`DB_NAME: ${dbDatabase}`);
+    // console.log(`DB_PASSWORD: ${dbPassword}`);
+    // console.log(`DB_PORT: ${dbPort}`);
+    // console.log(`DB_USER: ${dbName}`);
   }
 }

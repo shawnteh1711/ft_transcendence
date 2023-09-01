@@ -27,8 +27,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     # can try to disable port to direct access to backend
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
     env_file:
        - .env
     depends_on:

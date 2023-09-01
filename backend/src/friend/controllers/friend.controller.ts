@@ -112,7 +112,6 @@ export class FriendController {
 
   @Get('blocked/:userId')
   getBlockedUsers(@Param('userId') userId: number) {
-    console.log('userId', userId);
     return this.friendService.getBlockedUsers(+userId);
   }
 

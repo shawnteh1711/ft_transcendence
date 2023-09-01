@@ -28,7 +28,7 @@ export class FortyTwoStrategy extends PassportStrategy(Strategy, '42') {
     const authUser = await this.authService.findOneOrCreate(profile);
     if (authUser.online) {
       // User is already logged in, prevent the login
-      done(null, false, { message: 'User is already logged in' });
+      // done(null, false, { message: 'User is already logged in' });
     } else {
       done(null, authUser);
     }
