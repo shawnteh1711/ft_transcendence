@@ -54,10 +54,12 @@ const ChangeAccountModal = ({
   const handleNameUpdate = (inputValue: string) => {
     if (inputValue === "") {
       toast.error("Failed to change name: Name is not allowed to be empty!");
-    } else if (inputValue.length < 3) {
+    } else if (inputValue.length < 3 || inputValue.length > 12) {
       toast.error(
-        "Failed to change name: Name must contain at least 3 characters",
+        "Failed to change name: Name must contain between 3 to 12 characters",
       );
+    } else if (/\s/.test(inputValue)) {
+      toast.error("Failed to change name: Name must not contain spaces");
     } else {
       if (userData.authentication === true) {
         setPromptTFA(true);
@@ -102,7 +104,7 @@ const ChangeAccountModal = ({
             ) : (
               <>
                 <p className="text-md text-dimgrey">
-                  Name must contain more than 3 characters.
+                  Name must contain between 3 and 12 characters.
                 </p>
                 <input
                   type="text"

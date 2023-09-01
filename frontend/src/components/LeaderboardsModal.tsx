@@ -1,11 +1,25 @@
 import useUserStore, { UserData } from "@/store/useUserStore";
 import axios from "axios";
-import { RefObject, useEffect, useState } from "react";
+import {
+  Dispatch,
+  RefObject,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { toast } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCrown } from "@fortawesome/free-solid-svg-icons";
+import "@/styles/globals.css";
+import { formatDate } from "./user-profile/UserProfile";
 
-const Leaderboards = ({ sortBy }: { sortBy: string }) => {
+const Leaderboards = ({
+  sortBy,
+  setState,
+}: {
+  sortBy: string;
+  setState: Dispatch<SetStateAction<boolean>>;
+}) => {
   const userData = useUserStore((state) => state.userData);
   const [users, setUsers] = useState<any[]>([]);
 
@@ -40,12 +54,16 @@ const Leaderboards = ({ sortBy }: { sortBy: string }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("users",{
+        const response = await axios.get("users", {
           withCredentials: true,
         });
         const userData = response.data;
 
-        setUsers(sorting(userData));
+        const filteredUsers = userData.filter(
+          (user: any) => user.stat.wins !== 0 || user.stat.losses !== 0,
+        );
+
+        setUsers(sorting(filteredUsers));
       } catch (error) {
         console.error("error fetching leaderboards data", error);
       }
@@ -74,10 +92,14 @@ const Leaderboards = ({ sortBy }: { sortBy: string }) => {
   return (
     <div className="flex flex-col w-full">
       {users.map((user: UserData, i) => {
+        if (user.username === userData.username) {
+          setState(false);
+        }
+
         return (
           <div
             key={i}
-            className={`flex h-14 space-x-4 items-center justify-center px-4 ${
+            className={`flex space-x-4 items-center justify-center px-4 py-2 ${
               i % 2 === 0 ? "rounded-lg bg-jetblack" : ""
             }`}
           >
@@ -134,8 +156,8 @@ const Leaderboards = ({ sortBy }: { sortBy: string }) => {
             <p className="flex w-28 text-timberwolf items-center justify-end">
               {user.stat.smashes}
             </p>
-            <p className="hidden xl:flex w-36 text-timberwolf items-center justify-end">
-              We doing this?
+            <p className="hidden xl:flex w-40 text-timberwolf items-center justify-end">
+              {formatDate(new Date(user.stat.last_match), 2)}
             </p>
           </div>
         );
@@ -168,7 +190,7 @@ const LeaderboardTitle = () => {
       <p className="flex w-28 text-sm text-dimgrey items-center justify-end">
         smashes
       </p>
-      <p className="hidden xl:flex w-36 text-sm text-dimgrey items-center justify-end">
+      <p className="hidden xl:flex w-40 text-sm text-dimgrey items-center justify-end">
         last match
       </p>
     </div>
@@ -187,6 +209,7 @@ const LeaderboardsModal = ({
   lbRef,
 }: LeaderboardsModalProps) => {
   const [sortBy, setSortBy] = useState("MMR");
+  const [isNewPlayer, setIsNewPlayer] = useState(true);
 
   const handleClick = (str: string) => {
     if (sortBy !== str) setSortBy(str);
@@ -195,13 +218,11 @@ const LeaderboardsModal = ({
   return (
     <div className="overlay w-screen h-screen flex items-center justify-center bg-black/75 absolute top-0 left-0 z-20">
       <div
-        className="overlay-content w-10/12 h-5/6 bg-onyxgrey rounded-2xl p-8 relative z-50"
+        className="overlay-content flex flex-col w-10/12 h-5/6 bg-onyxgrey rounded-2xl px-8 pt-8 pb-4 relative z-50"
         ref={lbRef}
       >
-        <h2>
-          <p className="flex text-4xl text-timberwolf mb-8">
-            All time leaderboard
-          </p>
+        <h2 className="flex text-4xl text-timberwolf font-roboto mb-8">
+          All time leaderboard
         </h2>
         <div className="flex w-full h-10">
           <p className="flex flex-1 text-2xl">Top player</p>
@@ -237,9 +258,16 @@ const LeaderboardsModal = ({
           </div>
         </div>
         <LeaderboardTitle />
-        <div className="flex w-full space-x-10">
-          <Leaderboards sortBy={sortBy} />
+        <div className="flex w-full h-full space-x-10 overflow-y-scroll no-scrollbar">
+          <Leaderboards sortBy={sortBy} setState={setIsNewPlayer} />
         </div>
+        {isNewPlayer && (
+          <div className="mx:5 lg:mx-20 xl:mx-32 py-1 mt-3 rounded-3xl flex justify-center border-2 border-saffron">
+            <p className="text-sm text-timberwolf">
+              Play at least a match to be placed on the leaderboards
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

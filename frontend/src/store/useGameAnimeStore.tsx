@@ -3,6 +3,8 @@ import * as PIXI from "pixi.js";
 
 export interface GameAnime {
   startAnimate: boolean;
+  gameEnd: boolean;
+  animeCleared: boolean;
   winPlayer: number;
   yPos: number;
 }
@@ -18,6 +20,8 @@ const useGameAnimeStore = create<GameAnimeStore>((set) => ({
   textures: [],
   gameAnime: {
     startAnimate: false,
+    gameEnd: false,
+    animeCleared: false,
     winPlayer: 0,
     yPos: 0,
   },
