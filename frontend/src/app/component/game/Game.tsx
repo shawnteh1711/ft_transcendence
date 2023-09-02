@@ -162,6 +162,7 @@ const Game = () => {
   ]);
   // const [setUserData] = useUserStore((state) => [state.setUserData]);
   const fetchUserData = useFetchUserData();
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const socket = useContext(SocketContext);
 
@@ -177,18 +178,43 @@ const Game = () => {
 
   useEffect(() => {
     if (socket && gameState?.roomId != null) {
-      socket.emit("initialize-game", {
-        roomId: gameState!.roomId,
-        pOneId: gameState!.player1User.id,
-        pTwoId: gameState!.player2User.id,
-        gameProperties: gameProperties,
-      });
-      if (gameState!.player1User.socketId === socket.id) {
-        currentPlayer.current = "p1";
-        currentUser.current = gameState!.player1User;
-      } else if (gameState!.player2User.socketId === socket.id) {
-        currentPlayer.current = "p2";
-        currentUser.current = gameState!.player2User;
+      if (isInitialized === false) {
+        if (gameState!.player1User.socketId === socket.id) {
+          socket.emit("initialize-game", {
+            roomId: gameState!.roomId,
+            spectate: 0,
+            pOneScore: gameData!.p1Score,
+            pTwoScore: gameData!.p2Score,
+            pOneId: gameState!.player1User.id,
+            pTwoId: gameState!.player2User.id,
+            gameProperties: gameProperties,
+          });
+          currentPlayer.current = "p1";
+          currentUser.current = gameState!.player1User;
+        } else if (gameState!.player2User.socketId === socket.id) {
+          socket.emit("initialize-game", {
+            roomId: gameState!.roomId,
+            spectate: 0,
+            pOneScore: gameData!.p1Score,
+            pTwoScore: gameData!.p2Score,
+            pOneId: gameState!.player1User.id,
+            pTwoId: gameState!.player2User.id,
+            gameProperties: gameProperties,
+          });
+          currentPlayer.current = "p2";
+          currentUser.current = gameState!.player2User;
+        }
+        setIsInitialized(true);
+      } else {
+        socket.emit("initialize-game", {
+          roomId: gameState!.roomId,
+          spectate: 1,
+          pOneScore: gameData!.p1Score,
+          pTwoScore: gameData!.p2Score,
+          pOneId: gameState!.player1User.id,
+          pTwoId: gameState!.player2User.id,
+          gameProperties: gameProperties,
+        });
       }
       gameMode.current = gameState!.player1User.gameMode;
       setGameData({
@@ -416,7 +442,7 @@ const Game = () => {
 
     /* ends game from backend */
     socket?.on("game-over", async () => {
-      endGame();
+      // endGame();
       fetchUserData();
       router.push("/main-menu");
     });

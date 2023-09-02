@@ -85,18 +85,30 @@ export class GameService {
   /* set current room */
   checkGameMode(param: CheckGameModeParams) {
     param.user.gameMode = param.gameMode;
-    if (param.gameMode === 'classic') return param.classicRooms;
-    else if (param.gameMode === 'custom') return param.rankingRooms;
-    else if (param.gameMode === 'private') return param.privateRooms;
-    else return null;
+    if (param.gameMode === 'classic') {
+      // console.log('classic');
+      return param.classicRooms;
+    } else if (param.gameMode === 'custom') {
+      // console.log('custom');
+      return param.rankingRooms;
+    } else if (param.gameMode === 'private') {
+      // console.log('private');
+      return param.privateRooms;
+    } else return null;
   }
 
   /* set current room */
   getGameMode(param: GetGameModeParams) {
-    if (param.gameMode === 'classic') return param.classicRooms;
-    else if (param.gameMode === 'custom') return param.rankingRooms;
-    else if (param.gameMode === 'private') return param.privateRooms;
-    else return null;
+    if (param.gameMode === 'classic') {
+      // console.log('classic');
+      return param.classicRooms;
+    } else if (param.gameMode === 'custom') {
+      // console.log('custom');
+      return param.rankingRooms;
+    } else if (param.gameMode === 'private') {
+      // console.log('private');
+      return param.privateRooms;
+    } else return null;
   }
 
   /* join a user into a room */
@@ -127,15 +139,6 @@ export class GameService {
     param.client.join(roomId);
     param.client.emit('joined-room', roomId);
 
-    // update friends in game status
-    const friends = await this.friendService.getFriendsBoth(param.user.id);
-    for (const friend of friends) {
-      await this.friendService.update(friend.id, {
-        ...friend,
-        roomId: roomId,
-      });
-    }
-
     // if (roomPlayers.length === 2) {
     //   const playersData = roomPlayers.map((player) => ({
     //     player: player,
@@ -158,6 +161,16 @@ export class GameService {
       const p2 = playersData[1].player.id;
       if (p1 != undefined && p2 != undefined) {
         await this.friendService.updateRoomId(p1, p2, roomId);
+      }
+
+      // update friends in game status
+      const friends = await this.friendService.getFriendsBoth(param.user.id);
+      // console.log(friends);
+      for (const friend of friends) {
+        await this.friendService.update(friend.id, {
+          ...friend,
+          roomId: roomId,
+        });
       }
     }
 
@@ -355,8 +368,15 @@ export class GameService {
     const pOnePing = 0;
     const pTwoPing = 0;
     const gameStart = 0;
-    const pOneScore = 0;
-    const pTwoScore = 0;
+    let pOneScore;
+    let pTwoScore;
+    if (param.spectate === 0) {
+      pOneScore = 0;
+      pTwoScore = 0;
+    } else {
+      pOneScore = param.pOneScore;
+      pTwoScore = param.pTwoScore;
+    }
     const pOneSmash = 0;
     const pTwoSmash = 0;
     const ballSpeed = { x: 0, y: 0 };
@@ -578,6 +598,7 @@ export class GameService {
       param.gameInfo.pOneScore == endScore ||
       param.gameInfo.pTwoScore == endScore
     ) {
+      param.gameInfo.roundWinner = this.updateScore(param);
       let winner_uid = 0;
       if (param.gameInfo.pOneScore == endScore)
         winner_uid = param.gameInfo.pOneId;
@@ -718,12 +739,18 @@ export class GameService {
 
   /* handle game when it starts */
   handleGameState(param: HandleGameStateParams) {
+    const endScore = 5;
     param.gameInfo.ballSpeed = this.generateSpeed(param.gameInfo.roundWinner);
     Body.setVelocity(param.gameInfo.ball, {
       x: param.gameInfo.ballSpeed.x,
       y: param.gameInfo.ballSpeed.y,
     });
-    this.startRound(param);
+    if (
+      param.gameInfo.pOneScore < endScore &&
+      param.gameInfo.pTwoScore < endScore
+    ) {
+      this.startRound(param);
+    }
   }
 
   async playSound() {

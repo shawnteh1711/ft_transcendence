@@ -153,7 +153,7 @@ export class GameGateway implements OnModuleInit {
 
   @SubscribeMessage('active-paddle')
   activePaddle(client: Socket, param: SmashingPaddleParams) {
-    if (param.gameMode === 'custom') {
+    if (param.gameMode === 'custom' || param.gameMode === 'private') {
       this.gameService.updatePaddleActiveState({
         server: this.server,
         roomId: param.roomId,
@@ -166,7 +166,7 @@ export class GameGateway implements OnModuleInit {
 
   @SubscribeMessage('passive-paddle')
   passivePaddle(client: Socket, param: SmashingPaddleParams) {
-    if (param.gameMode === 'custom') {
+    if (param.gameMode === 'custom' || param.gameMode === 'private') {
       this.gameService.updatePaddlePassiveState({
         server: this.server,
         roomId: param.roomId,
@@ -179,10 +179,6 @@ export class GameGateway implements OnModuleInit {
 
   @SubscribeMessage('start-game')
   async startGame(client: Socket, param: GameParams) {
-    // const p1 = await this.gameInfo.get(param.roomId).pOneId;
-    // const p2 = await this.gameInfo.get(param.roomId).pTwoId;
-    // console.log(p1, p2);
-    // await this.friendService.updateRoomId(p1, p2);
     const roundWinner = this.gameInfo.get(param.roomId).roundWinner;
     if (roundWinner === null || roundWinner === param.player) {
       if (this.gameInfo.get(param.roomId).gameStart < 1) {

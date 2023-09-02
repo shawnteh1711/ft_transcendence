@@ -94,7 +94,7 @@ const MatchMaking = () => {
   }, [roomId, isMatchmaking, player1User, player2User, router]);
 
   return (
-    <div className="flex flex-col h-screen gap-5 relative">
+    <div className="flex flex-col h-screen gap-5 relative z-30">
       <button
         className="bg-mygrey"
         onClick={handleMatchmaking}
