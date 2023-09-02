@@ -532,7 +532,7 @@ export class GameService {
       ) {
         param.gameInfo.pTwoSmash++;
         Body.setVelocity(param.gameInfo.ball, {
-          x: param.gameInfo.ball.speed * param.gameProperties.ball.smashSpeed,
+          x: param.gameInfo.ball.speed * -param.gameProperties.ball.smashSpeed,
           y: param.gameInfo.ballSpeed.y,
         });
         return;

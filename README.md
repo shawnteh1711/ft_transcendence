@@ -101,6 +101,22 @@ export default async function handler(req: NextRequest) {
 if two user start a game, emit room Id and player from backend to the both user friends
 all their friend can view the game in friend list when looking at the user profile
 
+# Further improvement
+
+1. More security on backend api instead just cookies header
+2. Scailing of game graphics and client prediction to support multiple game so that it is not laggy
+3. More user authentication using access token and refresh token
+4. 2fa for sign in
+5. leave mid game should count lose
+
+# Learning outcome
+
+1. save state using zustand in nextjs
+2. UseContext to save state and access child component
+3. Using socket to achieve real time communication between frontend and backend
+4. Port forwading for hosting
+5. Docker to wrap whole project
+
 # Credit
 
 1. [Jokeroo, Game Dev](https://github.com/joekeroo)
