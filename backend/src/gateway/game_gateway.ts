@@ -115,7 +115,7 @@ export class GameGateway implements OnModuleInit {
   @SubscribeMessage('clear-room')
   clearRoom(client: Socket, param: { roomId: string; user: UserData }) {
     const currentRoom = this.gameService.getGameMode({
-      gameMode: param.user.gameMode,
+      gameMode: param.user?.gameMode,
       classicRooms: this.classicRooms,
       rankingRooms: this.rankingRooms,
       privateRooms: this.privateRooms,
@@ -131,7 +131,7 @@ export class GameGateway implements OnModuleInit {
         user: param.user,
       });
     }
-    this.gameService.clearRoomIdInFriend(param.user.id);
+    // this.gameService.clearRoomIdInFriend(param.user.id);
   }
 
   @SubscribeMessage('initialize-game')

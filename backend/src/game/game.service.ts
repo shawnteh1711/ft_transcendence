@@ -111,6 +111,17 @@ export class GameService {
     } else return null;
   }
 
+  async updateFriendsRoomId(p, roomId) {
+    const friends = await this.friendService.getFriendsBoth(p);
+    for (const friend of friends) {
+      const result = await this.friendService.update(friend.id, {
+        ...friend,
+        roomId: roomId,
+      });
+      // console.log('result', result);
+    }
+  }
+
   /* join a user into a room */
   async joinRooms(param: JoinRoomParams) {
     let { roomId, roomPlayers } = this.findAvailableRoom(param.rooms);
@@ -164,14 +175,26 @@ export class GameService {
       }
 
       // update friends in game status
-      const friends = await this.friendService.getFriendsBoth(param.user.id);
+      // const friends = await this.friendService.getFriendsBoth(p1);
       // console.log(friends);
-      for (const friend of friends) {
-        await this.friendService.update(friend.id, {
-          ...friend,
-          roomId: roomId,
-        });
-      }
+      // for (const friend of friends) {
+      //   const result = await this.friendService.update(friend.id, {
+      //     ...friend,
+      //     roomId: roomId,
+      //   });
+      //   console.log('result', result);
+      // }
+      // const friends2 = await this.friendService.getFriendsBoth(p2);
+      // console.log(friends2);
+      // for (const friend of friends2) {
+      //   const result = await this.friendService.update(friend.id, {
+      //     ...friend,
+      //     roomId: roomId,
+      //   });
+      //   console.log('result', result);
+      // }
+      await this.updateFriendsRoomId(p1, roomId);
+      await this.updateFriendsRoomId(p2, roomId);
     }
 
     // start game if room has 2 players
@@ -577,6 +600,10 @@ export class GameService {
     }
   }
 
+  async clearPlayerRoomId(param: HandleGameStateParams) {
+    await this.friendService.clearRoomId(param.roomId);
+  }
+
   /* ends game and remove everything */
   gameOver(param: HandleGameStateParams) {
     if (param.gameInfo) {
@@ -585,6 +612,7 @@ export class GameService {
       this.clearRoomIdInFriend(param.gameInfo.pOneId);
       this.clearRoomIdInFriend(param.gameInfo.pTwoId);
     }
+    this.clearPlayerRoomId(param);
     // param.client.leave(param.roomId);
     param.games.delete(param.roomId);
     param.rooms.delete(param.roomId);

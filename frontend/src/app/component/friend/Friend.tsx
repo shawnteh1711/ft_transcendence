@@ -40,6 +40,8 @@ const Friend = ({
     state.userData,
     state.setUserData,
   ]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
 
   const socket = useContext(SocketContext);
   useEffect(() => {
@@ -191,7 +193,7 @@ const Friend = ({
                   (friend?.roomId !== "null" && friend?.roomId !== null) ? (
                     <ViewFriendGame roomId={friend.roomId} />
                   ) : (
-                    <InviteFriendGame friend={friend} user={userData} socket={socket}/>
+                    <InviteFriendGame friend={friend} user={userData} socket={socket} isButtonDisabled={isButtonDisabled} setIsButtonDisabled={setIsButtonDisabled} />
                   )
                 }
                 <button onClick={() => unfriend(friend?.id)} className="transition-transform hover:scale-105 hover:bg-red-500 hover:text-white py-2 px-4 rounded-md"> <FontAwesomeIcon icon={faUserTimes} className="mr-2 "/>

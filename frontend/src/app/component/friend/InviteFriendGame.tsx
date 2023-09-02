@@ -1,30 +1,72 @@
 import { UserData } from "@/store/useUserStore";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Socket } from "socket.io-client";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGamepad } from '@fortawesome/free-solid-svg-icons';
+import { toast } from "react-hot-toast";
 
 interface InviteFriendGameProps {
   user: UserData;
   friend: UserData;
   socket: Socket<any, any> | null;
+  isButtonDisabled: boolean;
+  setIsButtonDisabled: any;
 }
 
 // take in current user, friend user
-const InviteFriendGame = ({ user, friend, socket}: InviteFriendGameProps) => {
+const InviteFriendGame = ({ user, friend, socket, isButtonDisabled, setIsButtonDisabled}: InviteFriendGameProps) => {
 
-  const handleInviteFriendGame = () => {
-   
+  const [gameStatus, setGameStatus] = useState<any[]>([]);
+  const cooldownTime = 60000; // 60 seconds
+
+  useEffect(() => {
+    if (friend.id) {
+      console.log('fetching game status');
+      fetchGameStatus(friend.id);
+    }
+  }, [friend, socket])
+
+  const fetchGameStatus = async (friendId: number) => {
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_NEST_HOST + "/friend/getGameStatus/" + friendId,
+        {
+          method: "GET",
+          credentials: "include",
+        },
+      );
+      if (response.ok) {
+        const Data = await response.json();
+        setGameStatus(Data);
+        return gameStatus;
+      }
+    } catch (error) {
+      // console.log("Error fetching messages data:", error);
+    }
+  };
+
+  const handleInviteFriendGame = async () => {
     // console.log(`Inviting friend to game`);
     // console.log(`User:`, user);
     // console.log(`Friend:`, friend);
-    socket?.emit('invite-game', {
-      user: user,
-      friend: friend,
-    });
-    // Implement the logic to invite a friend to a game
-    // For example, send a request to the backend to invite a friend to a game
-    // need a notification to the friend
+    if (isButtonDisabled == false) {
+      await fetchGameStatus(friend.id as number);
+      toast.success('Invited friend to game');
+      if (gameStatus.length == 0) {
+        socket?.emit('invite-game', {
+          user: user,
+          friend: friend,
+        });
+      } else {
+          toast.error('Game already in progress. Refresh to view');
+      }
+      setIsButtonDisabled(true);
+      setTimeout(() => {
+        setIsButtonDisabled(false);
+      }, cooldownTime)
+    } else {
+      toast.error('Please wait before inviting another friend');
+    }
   };
 
   return (

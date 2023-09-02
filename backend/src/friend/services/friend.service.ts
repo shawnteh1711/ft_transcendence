@@ -447,7 +447,7 @@ export class FriendService {
       },
       relations: ['sender', 'receiver'],
     });
-    if (friend == undefined) {
+    if (friend.length == 0) {
       friend = await this.friendRepository.find({
         where: {
           receiver: { id: userId },
@@ -457,5 +457,20 @@ export class FriendService {
       });
     }
     return friend;
+  }
+
+  async clearRoomId(roomId: string) {
+    const friend = await this.friendRepository.find({
+      where: {
+        roomId: roomId,
+      },
+      relations: ['sender', 'receiver'],
+    });
+    if (friend.length > 0) {
+      return await this.friendRepository.update(friend[0].id, {
+        roomId: null,
+      });
+    }
+    return null;
   }
 }
